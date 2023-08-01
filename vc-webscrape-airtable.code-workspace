@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "client-airtable"
+    },
+    {
+      "path": "service-scraper"
+    },
+    {
+      "path": "client-excel"
+    }
+  ],
+  "settings": {
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
+  }
+}
