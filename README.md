@@ -1,4 +1,4 @@
-# vc-webscrape-airtable
+# webscrape-airtable
 
 Test project as proof-of-concept for:
 
