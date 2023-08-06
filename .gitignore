@@ -3,3 +3,5 @@
 **/.env
 **/dist
 **/node_modules
+/data/scraped/*/**
+!/data/scraped/*/data-example.json
