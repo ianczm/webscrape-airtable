@@ -3,12 +3,10 @@ import { JSONFile } from "lowdb/node";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import Scraper, {
-  Product,
-} from "./scrapers/books-to-scrape-v1/BooksToScrapeScraper.js";
+import { BooksToScrapeScraper as Books } from "./scrapers/books-to-scrape-v1/BooksToScrapeScraper.js";
 
 type DBData = {
-  products: Product[];
+  products: Books.Product[];
 };
 
 const connectToDb = async (folderpath: string) => {
@@ -30,7 +28,7 @@ const main = async () => {
 
   const db = await connectToDb(`../../data/scraped/${folder}`);
 
-  const scraper = new Scraper(baseUrl);
+  const scraper = new Books.Scraper(baseUrl);
   await scraper.run({
     dataCallback: async (data) => {
       await db.data.products.push(...data);
