@@ -7,9 +7,6 @@
       "path": "client-airtable"
     },
     {
-      "path": "service-scraper-py"
-    },
-    {
       "path": "service-scraper-js"
     },
     {
