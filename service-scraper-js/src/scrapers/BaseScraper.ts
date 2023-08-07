@@ -30,7 +30,9 @@ export default abstract class BaseScraper<T> {
   protected abstract navigateToNextPage(): Promise<void>[];
 
   private async wait(time: number) {
-    return new Promise((r) => setTimeout(r, time));
+    if (time && time > 0) {
+      return new Promise((r) => setTimeout(r, time));
+    }
   }
 
   private async loadBaseUrl(headless: boolean) {
@@ -48,8 +50,9 @@ export default abstract class BaseScraper<T> {
     dataCallback: (data: T) => void;
     headless?: boolean;
     pageLimit?: number;
+    pageDelay?: number;
   }) {
-    const { dataCallback, headless, pageLimit } = options;
+    const { dataCallback, headless, pageLimit, pageDelay } = options;
 
     const limit = pageLimit ?? this.totalPages;
     await this.loadBaseUrl(headless ?? true);
@@ -57,6 +60,7 @@ export default abstract class BaseScraper<T> {
     for (this.currentPage = 1; this.currentPage <= limit; this.currentPage++) {
       const data = await this.getPageData();
       dataCallback(data); // do something with the data
+      await this.wait(pageDelay);
 
       if (this.currentPage !== limit) {
         await Promise.all(this.navigateToNextPage());
