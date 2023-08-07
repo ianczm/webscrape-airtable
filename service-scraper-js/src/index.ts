@@ -31,9 +31,13 @@ const main = async () => {
   const db = await connectToDb(`../../data/scraped/${folder}`);
 
   const scraper = new Scraper(baseUrl);
-  await scraper.run(async (data) => {
-    await db.data.products.push(...data);
-  }, false);
+  await scraper.run({
+    dataCallback: async (data) => {
+      await db.data.products.push(...data);
+    },
+    headless: false,
+    pageLimit: 5,
+  });
 
   await db.write();
 };

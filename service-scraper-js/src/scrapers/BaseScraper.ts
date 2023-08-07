@@ -43,19 +43,25 @@ export default abstract class BaseScraper<T> {
     return await this.page.$$eval(this.selector(), this.mapData, this.baseUrl);
   }
 
-  async run(dataCallback: (data: T) => void, headless: boolean) {
-    await this.loadBaseUrl(headless);
-    for (
-      this.currentPage = 1;
-      this.currentPage <= this.totalPages;
-      this.currentPage++
-    ) {
+  async run(options: {
+    dataCallback: (data: T) => void;
+    headless?: boolean;
+    pageLimit?: number;
+  }) {
+    const { dataCallback, headless, pageLimit } = options;
+
+    const limit = pageLimit ?? this.totalPages;
+    await this.loadBaseUrl(headless ?? true);
+
+    for (this.currentPage = 1; this.currentPage <= limit; this.currentPage++) {
       const data = await this.getPageData();
       dataCallback(data); // do something with the data
-      if (this.currentPage !== this.totalPages) {
+
+      if (this.currentPage !== limit) {
         await Promise.all(this.navigateToNextPage());
       }
     }
+
     await this.browser.close();
   }
 }
