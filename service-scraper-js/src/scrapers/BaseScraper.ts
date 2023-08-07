@@ -19,7 +19,8 @@ export default abstract class BaseScraper<T> {
   // Get total pages (implementation needed to scrape from website)
   protected abstract getTotalPages(): Promise<number>;
 
-  // Converts the retrieved elements into the data format
+  // Converts the retrieved elements into the data format, all data mappng logic
+  // must be in this function (cannot call anything outside browser context basically)
   protected abstract mapData(elements: Element[], baseUrl: string): T;
 
   // Selector of the elements containing data to be retrieved
