@@ -9,6 +9,10 @@ export namespace BooksToScrapeScraper {
   };
 
   export class Scraper extends BaseScraper<Product[]> {
+    constructor() {
+      super("https://books.toscrape.com/");
+    }
+
     protected async getTotalPages(): Promise<number> {
       return await this.page.$eval("ul.pager > .current", (pager) => {
         let regex = /\d* of (\d*)/;

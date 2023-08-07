@@ -23,12 +23,10 @@ const connectToDb = async (folderpath: string) => {
 };
 
 const main = async () => {
-  const baseUrl = "https://books.toscrape.com/";
   const folder = "books.toscrape.com";
-
   const db = await connectToDb(`../../data/scraped/${folder}`);
 
-  const scraper = new Books.Scraper(baseUrl);
+  const scraper = new Books.Scraper();
   await scraper.run({
     dataCallback: async (data) => {
       await db.data.products.push(...data);
